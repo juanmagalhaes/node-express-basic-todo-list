@@ -1,4 +1,5 @@
 const uuid = require('uuid/v1');
+const moment = require('moment');
 
 const validator = require("./validator");
 
@@ -22,7 +23,9 @@ function save(req, res) {
       .then(() => {
         const todo = {
           ...req.body,
-          id: uuid(),
+          createdAt: moment().format('DD/MM/YYYY'),
+          done: false,
+          id: uuid()
         };
 
         data.todos.push(todo);
@@ -34,6 +37,7 @@ function save(req, res) {
   } else {
     const idx = data.todos.findIndex(todo => todo.id === id);
     if (idx !== -1) {
+      delete req.body.createdAt;
       validator(req.body)
         .then(() => {
           const todo = {

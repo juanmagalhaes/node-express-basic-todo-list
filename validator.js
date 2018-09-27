@@ -13,7 +13,8 @@ const validate = async (obj, schema) => {
 
 const schema = Joi.object().keys({
   name: Joi.string().max(50),
-  description: Joi.string().max(200)
+  description: Joi.string().max(200),
+  done: Joi.boolean()
 });
 
 module.exports = obj => validate(obj, schema);
